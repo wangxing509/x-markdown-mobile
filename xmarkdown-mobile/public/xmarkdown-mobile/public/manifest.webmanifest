@@ -1,0 +1,18 @@
+{
+  "name": "X-markdown",
+  "short_name": "X-md",
+  "description": "X-markdown 手机端：每日 AI 精选、Markdown 阅读与知识库",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./data/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
