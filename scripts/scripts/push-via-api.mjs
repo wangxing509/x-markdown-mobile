@@ -70,15 +70,18 @@ async function api(method, endpoint, payload, _retries = 8) {
 
 // 收集文件
 const files = []
-for await (const p of glob('**/*', { cwd: dir, dot: true })) {
-  const abs = path.join(dir, p)
+const seen = new Set()
+for await (const p of glob('**/*', { cwd: dir, dot: true, absolute: true })) {
+  const abs = p
   let st
   try { st = statSync(abs) } catch { continue }
   if (!st.isFile()) continue
-  const rel = p.split(path.sep).join('/')
+  let rel = path.relative(dir, abs).split(path.sep).join('/')
   if (rel.startsWith('.git/')) continue
   if (rel.split('/').some((x) => ['node_modules', 'dist', 'dist-electron', 'release', '__pycache__', '.tmp-gh-pages'].includes(x))) continue
   if (rel.endsWith('.db')) continue
+  if (seen.has(rel)) continue
+  seen.add(rel)
   files.push({ rel, abs })
 }
 console.log(`共 ${files.length} 个文件待推送`)
